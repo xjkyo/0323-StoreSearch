@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5626C53F1CA3CD810022661D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5626C53D1CA3CD810022661D /* SearchViewController.m */; };
+		5626C5401CA3CD810022661D /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5626C53E1CA3CD810022661D /* SearchViewController.xib */; };
 		565F01591CA2BFB20053BE75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F01581CA2BFB20053BE75 /* main.m */; };
 		565F015C1CA2BFB20053BE75 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F015B1CA2BFB20053BE75 /* AppDelegate.m */; };
-		565F015F1CA2BFB20053BE75 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F015E1CA2BFB20053BE75 /* ViewController.m */; };
-		565F01621CA2BFB20053BE75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 565F01601CA2BFB20053BE75 /* Main.storyboard */; };
 		565F01641CA2BFB20053BE75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565F01631CA2BFB20053BE75 /* Assets.xcassets */; };
 		565F01671CA2BFB20053BE75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 565F01651CA2BFB20053BE75 /* LaunchScreen.storyboard */; };
 		565F01721CA2BFB20053BE75 /* StoreSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F01711CA2BFB20053BE75 /* StoreSearchTests.m */; };
@@ -35,13 +35,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5626C53C1CA3CD810022661D /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		5626C53D1CA3CD810022661D /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		5626C53E1CA3CD810022661D /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
 		565F01541CA2BFB20053BE75 /* StoreSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		565F01581CA2BFB20053BE75 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		565F015A1CA2BFB20053BE75 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		565F015B1CA2BFB20053BE75 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		565F015D1CA2BFB20053BE75 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		565F015E1CA2BFB20053BE75 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		565F01611CA2BFB20053BE75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		565F01631CA2BFB20053BE75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		565F01661CA2BFB20053BE75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		565F01681CA2BFB20053BE75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -103,9 +103,9 @@
 			children = (
 				565F015A1CA2BFB20053BE75 /* AppDelegate.h */,
 				565F015B1CA2BFB20053BE75 /* AppDelegate.m */,
-				565F015D1CA2BFB20053BE75 /* ViewController.h */,
-				565F015E1CA2BFB20053BE75 /* ViewController.m */,
-				565F01601CA2BFB20053BE75 /* Main.storyboard */,
+				5626C53C1CA3CD810022661D /* SearchViewController.h */,
+				5626C53D1CA3CD810022661D /* SearchViewController.m */,
+				5626C53E1CA3CD810022661D /* SearchViewController.xib */,
 				565F01631CA2BFB20053BE75 /* Assets.xcassets */,
 				565F01651CA2BFB20053BE75 /* LaunchScreen.storyboard */,
 				565F01681CA2BFB20053BE75 /* Info.plist */,
@@ -248,7 +248,7 @@
 			files = (
 				565F01671CA2BFB20053BE75 /* LaunchScreen.storyboard in Resources */,
 				565F01641CA2BFB20053BE75 /* Assets.xcassets in Resources */,
-				565F01621CA2BFB20053BE75 /* Main.storyboard in Resources */,
+				5626C5401CA3CD810022661D /* SearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,8 +273,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				565F015F1CA2BFB20053BE75 /* ViewController.m in Sources */,
 				565F015C1CA2BFB20053BE75 /* AppDelegate.m in Sources */,
+				5626C53F1CA3CD810022661D /* SearchViewController.m in Sources */,
 				565F01591CA2BFB20053BE75 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,14 +311,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		565F01601CA2BFB20053BE75 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				565F01611CA2BFB20053BE75 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		565F01651CA2BFB20053BE75 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -499,6 +491,7 @@
 				565F01831CA2BFB20053BE75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		565F01841CA2BFB20053BE75 /* Build configuration list for PBXNativeTarget "StoreSearchTests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +500,7 @@
 				565F01861CA2BFB20053BE75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		565F01871CA2BFB20053BE75 /* Build configuration list for PBXNativeTarget "StoreSearchUITests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +509,7 @@
 				565F01891CA2BFB20053BE75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
