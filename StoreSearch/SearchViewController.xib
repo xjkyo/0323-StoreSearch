@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchViewController">
             <connections>
+                <outlet property="searchBar" destination="b0p-LC-fki" id="RIY-xQ-oPs"/>
+                <outlet property="tableView" destination="HBg-x2-R8T" id="A59-tf-bzc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -13,7 +15,37 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" keyboardDismissMode="interactive" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HBg-x2-R8T">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Qvd-4D-Umt"/>
+                        <outlet property="delegate" destination="-1" id="Rou-ft-cSY"/>
+                    </connections>
+                </tableView>
+                <searchBar contentMode="redraw" placeholder="App name, artist, song, album, ebook." translatesAutoresizingMaskIntoConstraints="NO" id="b0p-LC-fki">
+                    <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="xDf-LV-uCD"/>
+                    </constraints>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="IQ0-8K-ulY"/>
+                    </connections>
+                </searchBar>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="b0p-LC-fki" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="2gR-DP-afe"/>
+                <constraint firstItem="HBg-x2-R8T" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2oU-Vl-Ed8"/>
+                <constraint firstAttribute="bottom" secondItem="HBg-x2-R8T" secondAttribute="bottom" id="A8u-Vt-ccW"/>
+                <constraint firstItem="b0p-LC-fki" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="DPK-dd-TFc"/>
+                <constraint firstItem="HBg-x2-R8T" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TPM-jj-aFV"/>
+                <constraint firstAttribute="trailing" secondItem="HBg-x2-R8T" secondAttribute="trailing" id="dR6-9a-MlA"/>
+                <constraint firstAttribute="trailing" secondItem="b0p-LC-fki" secondAttribute="trailing" id="j3A-zk-21O"/>
+            </constraints>
+            <point key="canvasLocation" x="522" y="322"/>
         </view>
     </objects>
 </document>
