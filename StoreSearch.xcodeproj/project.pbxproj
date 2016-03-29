@@ -19,6 +19,7 @@
 		565F01671CA2BFB20053BE75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 565F01651CA2BFB20053BE75 /* LaunchScreen.storyboard */; };
 		565F01721CA2BFB20053BE75 /* StoreSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F01711CA2BFB20053BE75 /* StoreSearchTests.m */; };
 		565F017D1CA2BFB20053BE75 /* StoreSearchUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F017C1CA2BFB20053BE75 /* StoreSearchUITests.m */; };
+		56641E8E1CAA5486005E86A6 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56641E8D1CAA5486005E86A6 /* LoadingCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		565F01781CA2BFB20053BE75 /* StoreSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoreSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		565F017C1CA2BFB20053BE75 /* StoreSearchUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreSearchUITests.m; sourceTree = "<group>"; };
 		565F017E1CA2BFB20053BE75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		56641E8D1CAA5486005E86A6 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				56581EF41CA5278C00CE1C6D /* SearchResultCell.h */,
 				56581EF51CA5278C00CE1C6D /* SearchResultCell.m */,
 				56581EF21CA51AE000CE1C6D /* SearchResultCell.xib */,
+				56641E8D1CAA5486005E86A6 /* LoadingCell.xib */,
 				56581EF71CA52F9200CE1C6D /* NothingFoundCell.xib */,
 				565F01631CA2BFB20053BE75 /* Assets.xcassets */,
 				565F01651CA2BFB20053BE75 /* LaunchScreen.storyboard */,
@@ -264,6 +267,7 @@
 			files = (
 				565F01671CA2BFB20053BE75 /* LaunchScreen.storyboard in Resources */,
 				565F01641CA2BFB20053BE75 /* Assets.xcassets in Resources */,
+				56641E8E1CAA5486005E86A6 /* LoadingCell.xib in Resources */,
 				56581EF31CA51AE000CE1C6D /* SearchResultCell.xib in Resources */,
 				56581EF81CA52F9200CE1C6D /* NothingFoundCell.xib in Resources */,
 				5626C5401CA3CD810022661D /* SearchViewController.xib in Resources */,

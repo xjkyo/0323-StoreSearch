@@ -12,6 +12,7 @@
 
 static NSString * const SearchResultCellIdentifier=@"SearchResultCell";
 static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
+static NSString * const LoadingCellIdentifier=@"LoadingCell";
 
 @interface SearchViewController () <UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 //A nib, the user interface of a view controller, is owned by that view controller.
@@ -22,6 +23,7 @@ static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
 
 @implementation SearchViewController{
     NSMutableArray *_searchResults;
+    BOOL _isLoading;
 }
 
 - (void)viewDidLoad {
@@ -31,10 +33,11 @@ static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
     [self.tableView registerNib:cellNib forCellReuseIdentifier:SearchResultCellIdentifier];
     cellNib=[UINib nibWithNibName:NothingFoundCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:NothingFoundCellIdentifier];
+    cellNib=[UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
+    [self.tableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
+    
     self.tableView.rowHeight=80;
-    
     [self.searchBar becomeFirstResponder];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,7 +46,9 @@ static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
 
 #pragma mark - UITableViewDataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (_searchResults == nil) {
+    if (_isLoading) {
+        return 1;
+    }else if (_searchResults == nil) {
         return 0;
     }else if([_searchResults count]==0){
         return 1;
@@ -53,7 +58,12 @@ static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
-    if([_searchResults count]==0){
+    if (_isLoading) {
+        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier forIndexPath:indexPath];
+        UIActivityIndicatorView *spinner=(UIActivityIndicatorView *)[cell viewWithTag:100];
+        [spinner startAnimating];
+        return cell;
+    }else if([_searchResults count]==0){
         return [tableView dequeueReusableCellWithIdentifier:NothingFoundCellIdentifier forIndexPath:indexPath];
     }else{
         SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier forIndexPath:indexPath];
@@ -101,7 +111,7 @@ static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([_searchResults count]==0){
+    if([_searchResults count]==0 || _isLoading){
         return nil;//it may still turn gray if you hold down on the row for a short while. That is because you did not change the selectionStyle property of the cell.
     }else{
         return indexPath;
@@ -123,30 +133,47 @@ static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     if([searchBar.text length]>0){
         [searchBar resignFirstResponder];
+        _isLoading=YES;
+        [self.tableView reloadData];//the main thread never gets around to handling that event because you immediately keep the thread busy with the networking operation.
+        
         _searchResults=[NSMutableArray arrayWithCapacity:10];
-        NSURL *url=[self urlWithSearchText:searchBar.text];
-        NSLog(@"URL '%@'",url);
-        NSString *jsonString=[self performStoreRequestWithURL:url];
-        if (jsonString == nil) {
-            [self showNetworkError];
-            return;
-        }
-        NSDictionary *dictionary=[self parseJSON:jsonString];
-        if (dictionary == nil) {
-            [self showNetworkError];
-            return;
-        }
-        NSLog(@"Dictionary '%@'",dictionary);
-        [self parseDictionary:dictionary];
-        [_searchResults sortUsingSelector:@selector(compareName:)];
-        [self.tableView reloadData];
+        dispatch_queue_t queue=dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
+            NSURL *url=[self urlWithSearchText:searchBar.text];
+            NSLog(@"URL '%@'",url);
+            NSString *jsonString=[self performStoreRequestWithURL:url];
+            if (jsonString == nil) {
+                //[self showNetworkError];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self showNetworkError];    //涉及到UI
+                });
+                return;
+            }
+            NSDictionary *dictionary=[self parseJSON:jsonString];
+            if (dictionary == nil) {
+                //[self showNetworkError];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self showNetworkError];
+                });
+                return;
+            }
+            NSLog(@"Dictionary '%@'",dictionary);
+            [self parseDictionary:dictionary];
+            [_searchResults sortUsingSelector:@selector(compareName:)];
+            //_isLoading=NO;
+            //[self.tableView reloadData];  // All UI code should always be performed on the main thread because of changing the UI from other threads would not be allowed.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _isLoading=NO;
+                [self.tableView reloadData];
+            });
+        });
     }
 }
 
 -(NSURL *)urlWithSearchText:(NSString *)searchText{
     //NSString *escapedSearchText=[searchText stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *escapedSearchText=[searchText stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSString *urlString=[NSString stringWithFormat:@"http://itunes.apple.com/search?term=%@",escapedSearchText];
+    NSString *urlString=[NSString stringWithFormat:@"http://itunes.apple.com/search?term=%@&limit=200",escapedSearchText];
     NSURL *url=[NSURL URLWithString:urlString];
     return url;
 }
