@@ -4,7 +4,7 @@
 //
 //  Created by XK on 16/3/24.
 //  Copyright © 2016年 XK. All rights reserved.
-//  v0.1
+//  v0.2
 
 #import "SearchViewController.h"
 #import "SearchResult.h"
