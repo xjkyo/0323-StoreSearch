@@ -9,6 +9,7 @@
 #import "SearchViewController.h"
 #import "SearchResult.h"
 #import "SearchResultCell.h"
+#import <AFNetworking/AFNetworking.h>
 
 static NSString * const SearchResultCellIdentifier=@"SearchResultCell";
 static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
@@ -24,6 +25,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 @implementation SearchViewController{
     NSMutableArray *_searchResults;
     BOOL _isLoading;
+    AFHTTPSessionManager *manager;
 }
 
 - (void)viewDidLoad {
@@ -39,6 +41,16 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     self.tableView.rowHeight=80;
     [self.searchBar becomeFirstResponder];
 }
+
+/*
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    self=[super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        manager=[AFHTTPSessionManager manager];
+        manager.responseSerializer=[AFJSONResponseSerializer serializer];
+    }
+    return self;
+}*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -133,10 +145,18 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     if([searchBar.text length]>0){
         [searchBar resignFirstResponder];
+        if (manager) {
+            //[manager.operationQueue cancelAllOperations];     //没有效果
+            //[manager.tasks makeObjectsPerformSelector:@selector(cancel)];     //可行所有任务取消后还可以继续发送请求
+            [manager invalidateSessionCancelingTasks:YES];      //所有任务取消，不能继续请求，除非再创建一个新的manager
+            
+            
+        }
         _isLoading=YES;
         [self.tableView reloadData];//the main thread never gets around to handling that event because you immediately keep the thread busy with the networking operation.
-        
+
         _searchResults=[NSMutableArray arrayWithCapacity:10];
+        /*
         dispatch_queue_t queue=dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_async(queue, ^{
             NSURL *url=[self urlWithSearchText:searchBar.text];
@@ -166,7 +186,27 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
                 _isLoading=NO;
                 [self.tableView reloadData];
             });
-        });
+        });*/
+        NSURL *url=[self urlWithSearchText:searchBar.text];
+        //AFHTTPSessionManager *manager=[AFHTTPSessionManager manager];
+        manager=[AFHTTPSessionManager manager];
+        manager.responseSerializer=[AFJSONResponseSerializer serializer];
+        [manager GET:url.absoluteString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject){
+            //NSLog(@"Success: %@",responseObject);
+            NSLog(@"Success!");
+            [self parseDictionary:responseObject];
+            [_searchResults sortUsingSelector:@selector(compareName:)];
+            _isLoading=NO;
+            [self.tableView reloadData];
+        }failure:^(NSURLSessionTask *operation, NSError *error){
+            if (error.code == -999) {    //手动取消无需弹框
+                return;
+            }
+            NSLog(@"Failure: %@",error);
+            [self showNetworkError];
+            _isLoading=NO;
+            [self.tableView reloadData];
+        }];
     }
 }
 
@@ -178,6 +218,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     return url;
 }
 
+/*
 -(NSString *)performStoreRequestWithURL:(NSURL *)url{
     NSError *error;
     NSString *resultString=[NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
@@ -186,9 +227,10 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
         return nil;
     }
     return resultString;
-}
+}*/
 
 #pragma mark - Parsing JSON 
+/*
 -(NSDictionary *)parseJSON:(NSString *)jsonString{
     NSData *data=[jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSError *error;
@@ -202,11 +244,11 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
         return nil;
     }
     return resuleObject;
-}
+}*/
 
 -(void)parseDictionary:(NSDictionary *)dictionary{
     //NSArray *array=dictionary[@"results"];
-    NSArray *array=[dictionary objectForKey:@"results"];
+    NSArray *array=dictionary[@"results"];//[dictionary objectForKey:@"results"];
     if (array == nil) {
         NSLog(@"Excepted 'result' array");
         return;
