@@ -10,6 +10,7 @@
 #import "SearchResult.h"
 #import "SearchResultCell.h"
 #import <AFNetworking/AFNetworking.h>
+#import "DetailViewController.h"
 
 static NSString * const SearchResultCellIdentifier=@"SearchResultCell";
 static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
@@ -40,6 +41,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     [self.tableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
     
     self.tableView.rowHeight=80;
+    NSLog(@"tableView bounds width:%f",self.tableView.bounds.size.width);
+    NSLog(@"tableView frame width:%f",self.tableView.frame.size.width);
     [self.searchBar becomeFirstResponder];
 }
 
@@ -88,6 +91,13 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    DetailViewController *controller=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];  //This is the equivalent of making a modal segue
+    //[self presentViewController:controller animated:YES completion:nil];
+    [self.view addSubview:controller.view]; //This places it on top of the table view, search bar and segmented control
+    [self addChildViewController:controller];   //Then tell the SearchViewController that the DetailViewController is now managing that part of the screen
+    [controller didMoveToParentViewController:self];    //Tell the new view controller that it now has a parent view controller
+    //In this new arrangement, SearchViewController is the “parent” view controller, and DetailViewController is the “child”. In other words, the Detail screen is embedded inside the SearchViewController.
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5626C53F1CA3CD810022661D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5626C53D1CA3CD810022661D /* SearchViewController.m */; };
 		5626C5401CA3CD810022661D /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5626C53E1CA3CD810022661D /* SearchViewController.xib */; };
+		564DA1471CAE5B8C006EE0A7 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 564DA1451CAE5B8C006EE0A7 /* DetailViewController.m */; };
+		564DA1481CAE5B8C006EE0A7 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 564DA1461CAE5B8C006EE0A7 /* DetailViewController.xib */; };
 		56581EF11CA4DDA900CE1C6D /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 56581EF01CA4DDA900CE1C6D /* SearchResult.m */; };
 		56581EF31CA51AE000CE1C6D /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56581EF21CA51AE000CE1C6D /* SearchResultCell.xib */; };
 		56581EF61CA5278C00CE1C6D /* SearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56581EF51CA5278C00CE1C6D /* SearchResultCell.m */; };
@@ -43,6 +45,9 @@
 		5626C53C1CA3CD810022661D /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		5626C53D1CA3CD810022661D /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		5626C53E1CA3CD810022661D /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
+		564DA1441CAE5B8C006EE0A7 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		564DA1451CAE5B8C006EE0A7 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		564DA1461CAE5B8C006EE0A7 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
 		56581EEF1CA4DDA900CE1C6D /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		56581EF01CA4DDA900CE1C6D /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
 		56581EF21CA51AE000CE1C6D /* SearchResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
@@ -130,16 +135,17 @@
 				565F015B1CA2BFB20053BE75 /* AppDelegate.m */,
 				56581EEF1CA4DDA900CE1C6D /* SearchResult.h */,
 				56581EF01CA4DDA900CE1C6D /* SearchResult.m */,
-				5626C53C1CA3CD810022661D /* SearchViewController.h */,
-				5626C53D1CA3CD810022661D /* SearchViewController.m */,
-				5626C53E1CA3CD810022661D /* SearchViewController.xib */,
 				56581EF41CA5278C00CE1C6D /* SearchResultCell.h */,
 				56581EF51CA5278C00CE1C6D /* SearchResultCell.m */,
 				56581EF21CA51AE000CE1C6D /* SearchResultCell.xib */,
 				56641E8D1CAA5486005E86A6 /* LoadingCell.xib */,
 				56581EF71CA52F9200CE1C6D /* NothingFoundCell.xib */,
-				565F01631CA2BFB20053BE75 /* Assets.xcassets */,
-				565F01681CA2BFB20053BE75 /* Info.plist */,
+				5626C53C1CA3CD810022661D /* SearchViewController.h */,
+				5626C53D1CA3CD810022661D /* SearchViewController.m */,
+				5626C53E1CA3CD810022661D /* SearchViewController.xib */,
+				564DA1441CAE5B8C006EE0A7 /* DetailViewController.h */,
+				564DA1451CAE5B8C006EE0A7 /* DetailViewController.m */,
+				564DA1461CAE5B8C006EE0A7 /* DetailViewController.xib */,
 				565F01571CA2BFB20053BE75 /* Supporting Files */,
 			);
 			path = StoreSearch;
@@ -148,6 +154,8 @@
 		565F01571CA2BFB20053BE75 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				565F01631CA2BFB20053BE75 /* Assets.xcassets */,
+				565F01681CA2BFB20053BE75 /* Info.plist */,
 				565F01581CA2BFB20053BE75 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -290,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				565F01641CA2BFB20053BE75 /* Assets.xcassets in Resources */,
+				564DA1481CAE5B8C006EE0A7 /* DetailViewController.xib in Resources */,
 				56641E8E1CAA5486005E86A6 /* LoadingCell.xib in Resources */,
 				56581EF31CA51AE000CE1C6D /* SearchResultCell.xib in Resources */,
 				56581EF81CA52F9200CE1C6D /* NothingFoundCell.xib in Resources */,
@@ -371,6 +380,7 @@
 				56581EF61CA5278C00CE1C6D /* SearchResultCell.m in Sources */,
 				56581EF11CA4DDA900CE1C6D /* SearchResult.m in Sources */,
 				565F01591CA2BFB20053BE75 /* main.m in Sources */,
+				564DA1471CAE5B8C006EE0A7 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
