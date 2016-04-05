@@ -33,6 +33,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.contentInset=UIEdgeInsetsMake(108, 0, 0, 0);
+    self.tableView.rowHeight=80;
     UINib *cellNib=[UINib nibWithNibName:SearchResultCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:SearchResultCellIdentifier];
     cellNib=[UINib nibWithNibName:NothingFoundCellIdentifier bundle:nil];
@@ -40,9 +41,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     cellNib=[UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
     
-    self.tableView.rowHeight=80;
-    NSLog(@"tableView bounds width:%f",self.tableView.bounds.size.width);
-    NSLog(@"tableView frame width:%f",self.tableView.frame.size.width);
+    NSLog(@"tableView frame height:%f",self.tableView.frame.size.height);
+    NSLog(@"view fram height:%f",self.view.frame.size.height);  //这里是600，后面是568，why?  答：此处frame还没设置好
     [self.searchBar becomeFirstResponder];
 }
 
@@ -93,6 +93,16 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     DetailViewController *controller=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];  //This is the equivalent of making a modal segue
+    SearchResult *searchResult=_searchResults[indexPath.row];
+    controller.searchResult=searchResult;
+    controller.view.frame=self.view.frame;      //After you instantiate the DetailViewController it always has a view that is 568 points high, even on a 3.5-inch device. Before you add its view to the window you need to resize it to the proper dimensions.
+    NSLog(@"view frame height:%f",self.view.frame.size.height);
+    NSLog(@"subview frame height:%f",controller.view.frame.size.height);
+    
+    //放在这里将会使得pupView的标签为空，因为DetailViewController中对标签的设置在ViewDidLoad方法里，controlller.view.frame设置以后已经完成了ViewDidLoad，此处的设置不再生效
+    //SearchResult *searchResult=_searchResults[indexPath.row];
+    //controller.searchResult=searchResult;
+    
     //[self presentViewController:controller animated:YES completion:nil];
     [self.view addSubview:controller.view]; //This places it on top of the table view, search bar and segmented control
     [self addChildViewController:controller];   //Then tell the SearchViewController that the DetailViewController is now managing that part of the screen
@@ -104,6 +114,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     if([_searchResults count]==0 || _isLoading){
         return nil;//it may still turn gray if you hold down on the row for a short while. That is because you did not change the selectionStyle property of the cell.
     }else{
+        [self.searchBar resignFirstResponder];
         return indexPath;
     }
 }
@@ -137,10 +148,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
         [self.searchBar resignFirstResponder];
         if (manager) {
             //[manager.operationQueue cancelAllOperations];     //没有效果
-            //[manager.tasks makeObjectsPerformSelector:@selector(cancel)];     //可行所有任务取消后还可以继续发送请求
+            //[manager.tasks makeObjectsPerformSelector:@selector(cancel)];     //可行,所有任务取消后还可以继续发送请求
             [manager invalidateSessionCancelingTasks:YES];      //所有任务取消，不能继续请求，除非再创建一个新的manager
-            
-            
         }
         _isLoading=YES;
         [self.tableView reloadData];//the main thread never gets around to handling that event because you immediately keep the thread busy with the networking operation.

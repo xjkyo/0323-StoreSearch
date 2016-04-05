@@ -12,6 +12,17 @@
 
 @implementation SearchResultCell
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+    }
+    return self;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
+    [super setSelected:selected animated:animated];
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     UIView *selectedView=[[UIView alloc]initWithFrame:CGRectZero];//同理:cell被tableview引用的时候会默认和tableview的宽度一样
@@ -22,8 +33,8 @@
 -(void)prepareForReuse{
     [super prepareForReuse];
     [self.artworkImageView cancelImageDownloadTask];
-    self.nameLabel=nil;
-    self.artistNameLabel=nil;
+    self.nameLabel.text=nil;        //There was a BUG here:self.nameLabel=nil; 造成问题：第一次搜Southpark，tableView显示正常，再搜Batman，tableView显示的name和artistName仍然是Southpark的结果
+    self.artistNameLabel.text=nil;
 }
 
 -(void)configureForSearchResult:(SearchResult *)searchResult{
@@ -33,35 +44,10 @@
     if (artistName == nil) {
         artistName=@"Unknown";
     }
-    NSString *kind=[self kindForDisplay:searchResult.kind];
+    NSString *kind=[searchResult kindForDisplay];
     self.artistNameLabel.text=[NSString stringWithFormat:@"%@ (%@)",artistName,kind];
     [self.artworkImageView setImageWithURL:[NSURL URLWithString:searchResult.artworkURL60] placeholderImage:[UIImage imageNamed:@"Placeholder"]];
 }
 
--(NSString *)kindForDisplay:(NSString *)kind{
-    if ([kind isEqualToString:@"album"]) {
-        return @"Album";
-    }else if ([kind isEqualToString:@"audiobook"]){
-        return @"Audio Book";
-    }else if ([kind isEqualToString:@"book"]){
-        return @"Book";
-    }else if ([kind isEqualToString:@"ebook"]){
-        return @"E-Book";
-    }else if ([kind isEqualToString:@"feature-movie"]){
-        return @"Movie";
-    }else if ([kind isEqualToString:@"music-video"]){
-        return @"Music Video";
-    }else if ([kind isEqualToString:@"podcast"]){
-        return @"Podcase";
-    }else if ([kind isEqualToString:@"software"]){
-        return @"App";
-    }else if ([kind isEqualToString:@"song"]){
-        return @"Song";
-    }else if ([kind isEqualToString:@"tv-episode"]){
-        return @"TV Episode";
-    }else{
-        return kind;
-    }
-}
 
 @end
