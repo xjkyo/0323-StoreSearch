@@ -42,7 +42,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     [self.tableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
     
     NSLog(@"tableView frame height:%f",self.tableView.frame.size.height);
-    NSLog(@"view fram height:%f",self.view.frame.size.height);  //这里是600，后面是568，why?  答：此处frame还没设置好
+    NSLog(@"view frame height:%f",self.view.frame.size.height);  //这里是600，后面是568，why?  答：此处frame还没设置好
     [self.searchBar becomeFirstResponder];
 }
 
@@ -90,12 +90,14 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.searchBar resignFirstResponder];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     DetailViewController *controller=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];  //This is the equivalent of making a modal segue
     SearchResult *searchResult=_searchResults[indexPath.row];
     controller.searchResult=searchResult;
     controller.view.frame=self.view.frame;      //After you instantiate the DetailViewController it always has a view that is 568 points high, even on a 3.5-inch device. Before you add its view to the window you need to resize it to the proper dimensions.
+    NSLog(@"tableView frame height:%f",self.tableView.frame.size.height);
     NSLog(@"view frame height:%f",self.view.frame.size.height);
     NSLog(@"subview frame height:%f",controller.view.frame.size.height);
     
@@ -114,7 +116,6 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     if([_searchResults count]==0 || _isLoading){
         return nil;//it may still turn gray if you hold down on the row for a short while. That is because you did not change the selectionStyle property of the cell.
     }else{
-        [self.searchBar resignFirstResponder];
         return indexPath;
     }
 }

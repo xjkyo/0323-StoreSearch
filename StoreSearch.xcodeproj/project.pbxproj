@@ -20,6 +20,7 @@
 		565F01641CA2BFB20053BE75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565F01631CA2BFB20053BE75 /* Assets.xcassets */; };
 		565F01721CA2BFB20053BE75 /* StoreSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F01711CA2BFB20053BE75 /* StoreSearchTests.m */; };
 		565F017D1CA2BFB20053BE75 /* StoreSearchUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F017C1CA2BFB20053BE75 /* StoreSearchUITests.m */; };
+		566388B81CB3BE7200E72A13 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 566388B71CB3BE7200E72A13 /* GradientView.m */; };
 		56641E8E1CAA5486005E86A6 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56641E8D1CAA5486005E86A6 /* LoadingCell.xib */; };
 		AF4B5FDEE63D6B9B4A000509 /* libPods-StoreSearch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 756E5A2BDE1A8C9EF756E431 /* libPods-StoreSearch.a */; };
 /* End PBXBuildFile section */
@@ -66,6 +67,8 @@
 		565F01781CA2BFB20053BE75 /* StoreSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoreSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		565F017C1CA2BFB20053BE75 /* StoreSearchUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreSearchUITests.m; sourceTree = "<group>"; };
 		565F017E1CA2BFB20053BE75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		566388B61CB3BE7200E72A13 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
+		566388B71CB3BE7200E72A13 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		56641E8D1CAA5486005E86A6 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		756E5A2BDE1A8C9EF756E431 /* libPods-StoreSearch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StoreSearch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BF45C8D890DD8F5B50F2DF6 /* Pods-StoreSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoreSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StoreSearch/Pods-StoreSearch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 				564DA1441CAE5B8C006EE0A7 /* DetailViewController.h */,
 				564DA1451CAE5B8C006EE0A7 /* DetailViewController.m */,
 				564DA1461CAE5B8C006EE0A7 /* DetailViewController.xib */,
+				566388B61CB3BE7200E72A13 /* GradientView.h */,
+				566388B71CB3BE7200E72A13 /* GradientView.m */,
 				565F01571CA2BFB20053BE75 /* Supporting Files */,
 			);
 			path = StoreSearch;
@@ -380,6 +385,7 @@
 				56581EF61CA5278C00CE1C6D /* SearchResultCell.m in Sources */,
 				56581EF11CA4DDA900CE1C6D /* SearchResult.m in Sources */,
 				565F01591CA2BFB20053BE75 /* main.m in Sources */,
+				566388B81CB3BE7200E72A13 /* GradientView.m in Sources */,
 				564DA1471CAE5B8C006EE0A7 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

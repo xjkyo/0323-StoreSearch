@@ -27,7 +27,7 @@
     [super viewDidLoad];
     //UIImage *image=[UIImage imageNamed:@"PriceButton"];
     UIImage *image=[[UIImage imageNamed:@"PriceButton"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
-    image=[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    image=[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];//UIKit will remove the original colors from the image and paint the whole thing in the tint color.
     [self.priceButton setBackgroundImage:image forState:UIControlStateNormal];
     self.view.tintColor=[UIColor colorWithRed:20/255.0f green:160/255.0f blue:160/255.0f alpha:1.0f];
     self.popupView.layer.cornerRadius=10.0f;
@@ -40,6 +40,8 @@
     if (self.searchResult != nil) {
         [self updateUI];
     }
+    
+    self.view.backgroundColor=[UIColor clearColor];
 }
 
 -(void)dealloc{
