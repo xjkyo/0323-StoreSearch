@@ -96,7 +96,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     DetailViewController *controller=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];  //This is the equivalent of making a modal segue
     SearchResult *searchResult=_searchResults[indexPath.row];
     controller.searchResult=searchResult;
-    controller.view.frame=self.view.frame;      //After you instantiate the DetailViewController it always has a view that is 568 points high, even on a 3.5-inch device. Before you add its view to the window you need to resize it to the proper dimensions.
+    /*
+    controller.view.frame=self.view.bounds;      //After you instantiate the DetailViewController it always has a view that is 568 points high, even on a 3.5-inch device. Before you add its view to the window you need to resize it to the proper dimensions.
     NSLog(@"tableView frame height:%f",self.tableView.frame.size.height);
     NSLog(@"view frame height:%f",self.view.frame.size.height);
     NSLog(@"subview frame height:%f",controller.view.frame.size.height);
@@ -110,6 +111,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     [self addChildViewController:controller];   //Then tell the SearchViewController that the DetailViewController is now managing that part of the screen
     [controller didMoveToParentViewController:self];    //Tell the new view controller that it now has a parent view controller
     //In this new arrangement, SearchViewController is the “parent” view controller, and DetailViewController is the “child”. In other words, the Detail screen is embedded inside the SearchViewController.
+     */
+    [controller presentInParentViewController:self];
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
