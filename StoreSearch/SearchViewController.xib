@@ -58,12 +58,12 @@
             <constraints>
                 <constraint firstItem="b0p-LC-fki" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="2gR-DP-afe"/>
                 <constraint firstItem="HBg-x2-R8T" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2oU-Vl-Ed8"/>
-                <constraint firstItem="Ewz-nc-dov" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="6SI-pz-PFH"/>
                 <constraint firstItem="Ewz-nc-dov" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8eV-vC-1nz"/>
                 <constraint firstAttribute="bottom" secondItem="HBg-x2-R8T" secondAttribute="bottom" id="A8u-Vt-ccW"/>
                 <constraint firstItem="b0p-LC-fki" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="DPK-dd-TFc"/>
                 <constraint firstItem="HBg-x2-R8T" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TPM-jj-aFV"/>
                 <constraint firstAttribute="trailing" secondItem="Ewz-nc-dov" secondAttribute="trailing" id="VSl-oa-39D"/>
+                <constraint firstItem="Ewz-nc-dov" firstAttribute="top" secondItem="b0p-LC-fki" secondAttribute="bottom" id="ZGE-ij-xTi"/>
                 <constraint firstAttribute="trailing" secondItem="HBg-x2-R8T" secondAttribute="trailing" id="dR6-9a-MlA"/>
                 <constraint firstAttribute="trailing" secondItem="b0p-LC-fki" secondAttribute="trailing" id="j3A-zk-21O"/>
             </constraints>

@@ -57,7 +57,7 @@
 }
 
 -(IBAction)close:(id)sender{
-    [self dismissFromParentViewController];
+    [self dismissFromParentViewControllerWithAnimationType:DetailViewControllerAnimationTypeSlide];
 }
 
 -(void)updateUI{
@@ -113,13 +113,17 @@
     [self.view.layer addAnimation:bounceAnimation forKey:@"bounceAnimation"];   //Core Animation doesn’t work on the UIView objects themselves but on their CALayers
 }
 
--(void)dismissFromParentViewController{
+-(void)dismissFromParentViewControllerWithAnimationType:(DetailViewControllerAnimationType)animationType{
     //[self dismissViewControllerAnimated:YES completion:nil];
     [self willMoveToParentViewController:nil];
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect rect=self.view.bounds;
-        rect.origin.y +=rect.size.height;
-        self.view.frame=rect;
+    [UIView animateWithDuration:0.4 animations:^{
+        if (animationType==DetailViewControllerAnimationTypeSlide) {
+            CGRect rect=self.view.bounds;
+            rect.origin.y +=rect.size.height;
+            self.view.frame=rect;
+        }else{
+            self.view.alpha=0.0f;
+        }
         _gradientView.alpha=0.0f;
     }completion:^(BOOL finished){
         [self.view removeFromSuperview];

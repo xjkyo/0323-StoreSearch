@@ -14,6 +14,8 @@
     self=[super initWithFrame:frame];
     if (self) {
         self.backgroundColor=[UIColor clearColor];
+        self.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        //This tells the view that it should change both its width and its height proportionally when the superview it belongs to changes its size (due to being rotated or otherwise).
     }
     return self;
 }

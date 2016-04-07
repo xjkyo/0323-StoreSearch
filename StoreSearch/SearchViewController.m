@@ -11,6 +11,7 @@
 #import "SearchResultCell.h"
 #import <AFNetworking/AFNetworking.h>
 #import "DetailViewController.h"
+#import "LandscapeViewController.h"
 
 static NSString * const SearchResultCellIdentifier=@"SearchResultCell";
 static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
@@ -28,6 +29,9 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     NSMutableArray *_searchResults;
     BOOL _isLoading;
     AFHTTPSessionManager *manager;
+    LandscapeViewController *_landscapeViewController;
+    UIStatusBarStyle _statusBarStyle;
+    __weak DetailViewController *_detailViewController;     //Now this pointer is no longer keeping the object alive and as soon as the object is deallocated, _detailViewController automatically becomes nil.
 }
 
 - (void)viewDidLoad {
@@ -44,6 +48,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     NSLog(@"tableView frame height:%f",self.tableView.frame.size.height);
     NSLog(@"view frame height:%f",self.view.frame.size.height);  //这里是600，后面是568，why?  答：此处frame还没设置好
     [self.searchBar becomeFirstResponder];
+    
+    _statusBarStyle=UIStatusBarStyleDefault;
 }
 
 /*
@@ -55,6 +61,57 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     }
     return self;
 }*/
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        [self hideLandscapeViewWithDuration:duration];
+    }else{
+        [self showLandscapeViewWithDuration:duration];
+    }
+}
+
+-(void)showLandscapeViewWithDuration:(NSTimeInterval)duration{
+    if (_landscapeViewController == nil) {
+        _landscapeViewController=[[LandscapeViewController alloc]initWithNibName:@"LandscapeViewController" bundle:nil];
+        _landscapeViewController.view.frame=self.view.bounds;
+        _landscapeViewController.view.alpha=0.0f;
+        [self.view addSubview:_landscapeViewController.view];
+        [self addChildViewController:_landscapeViewController];
+        [UIView animateWithDuration:duration animations:^{
+            _landscapeViewController.view.alpha=1.0f;
+            _statusBarStyle=UIStatusBarStyleLightContent;
+            [self setNeedsStatusBarAppearanceUpdate];
+        }completion:^(BOOL finished){
+            [_landscapeViewController didMoveToParentViewController:self];
+        }];
+        [self.searchBar resignFirstResponder];
+        [_detailViewController dismissFromParentViewControllerWithAnimationType:DetailViewControllerAnimationTypeFade];
+    }
+}
+
+-(void)hideLandscapeViewWithDuration:(NSTimeInterval)duration{
+    if (_landscapeViewController != nil) {
+        [_landscapeViewController willMoveToParentViewController:nil];
+        [UIView animateWithDuration:duration animations:^{
+            _landscapeViewController.view.alpha=0.0f;
+            _statusBarStyle=UIStatusBarStyleDefault;
+            [self setNeedsStatusBarAppearanceUpdate];
+        }completion:^(BOOL finished){
+            [_landscapeViewController.view removeFromSuperview];
+            [_landscapeViewController removeFromParentViewController];
+            _landscapeViewController=nil;       //Remember to deallocate the LandscapeViewController
+        }];
+    }
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{     //[self setNeedsStatusBarAppearanceUpdate]; This causes the preferredStatusBarStyle method
+    return _statusBarStyle;
+}
+
+-(BOOL)prefersStatusBarHidden{
+    return NO;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -113,6 +170,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     //In this new arrangement, SearchViewController is the “parent” view controller, and DetailViewController is the “child”. In other words, the Detail screen is embedded inside the SearchViewController.
      */
     [controller presentInParentViewController:self];
+    
+    _detailViewController=controller;       //此处造成了一个内存泄露,dismiss时没有dealloc消息,所以要设置成weak
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -22,6 +22,8 @@
 		565F017D1CA2BFB20053BE75 /* StoreSearchUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F017C1CA2BFB20053BE75 /* StoreSearchUITests.m */; };
 		566388B81CB3BE7200E72A13 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 566388B71CB3BE7200E72A13 /* GradientView.m */; };
 		56641E8E1CAA5486005E86A6 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56641E8D1CAA5486005E86A6 /* LoadingCell.xib */; };
+		56702E4E1CB4FE6D00176DB4 /* LandscapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56702E4C1CB4FE6D00176DB4 /* LandscapeViewController.m */; };
+		56702E4F1CB4FE6D00176DB4 /* LandscapeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56702E4D1CB4FE6D00176DB4 /* LandscapeViewController.xib */; };
 		AF4B5FDEE63D6B9B4A000509 /* libPods-StoreSearch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 756E5A2BDE1A8C9EF756E431 /* libPods-StoreSearch.a */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +72,9 @@
 		566388B61CB3BE7200E72A13 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		566388B71CB3BE7200E72A13 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		56641E8D1CAA5486005E86A6 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		56702E4B1CB4FE6D00176DB4 /* LandscapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapeViewController.h; sourceTree = "<group>"; };
+		56702E4C1CB4FE6D00176DB4 /* LandscapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandscapeViewController.m; sourceTree = "<group>"; };
+		56702E4D1CB4FE6D00176DB4 /* LandscapeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LandscapeViewController.xib; sourceTree = "<group>"; };
 		756E5A2BDE1A8C9EF756E431 /* libPods-StoreSearch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StoreSearch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BF45C8D890DD8F5B50F2DF6 /* Pods-StoreSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoreSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StoreSearch/Pods-StoreSearch.debug.xcconfig"; sourceTree = "<group>"; };
 		A6754712F519D6681F4AAF30 /* Pods-StoreSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoreSearch.release.xcconfig"; path = "Pods/Target Support Files/Pods-StoreSearch/Pods-StoreSearch.release.xcconfig"; sourceTree = "<group>"; };
@@ -151,6 +156,9 @@
 				564DA1461CAE5B8C006EE0A7 /* DetailViewController.xib */,
 				566388B61CB3BE7200E72A13 /* GradientView.h */,
 				566388B71CB3BE7200E72A13 /* GradientView.m */,
+				56702E4B1CB4FE6D00176DB4 /* LandscapeViewController.h */,
+				56702E4C1CB4FE6D00176DB4 /* LandscapeViewController.m */,
+				56702E4D1CB4FE6D00176DB4 /* LandscapeViewController.xib */,
 				565F01571CA2BFB20053BE75 /* Supporting Files */,
 			);
 			path = StoreSearch;
@@ -308,6 +316,7 @@
 				56581EF31CA51AE000CE1C6D /* SearchResultCell.xib in Resources */,
 				56581EF81CA52F9200CE1C6D /* NothingFoundCell.xib in Resources */,
 				5626C5401CA3CD810022661D /* SearchViewController.xib in Resources */,
+				56702E4F1CB4FE6D00176DB4 /* LandscapeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +395,7 @@
 				56581EF11CA4DDA900CE1C6D /* SearchResult.m in Sources */,
 				565F01591CA2BFB20053BE75 /* main.m in Sources */,
 				566388B81CB3BE7200E72A13 /* GradientView.m in Sources */,
+				56702E4E1CB4FE6D00176DB4 /* LandscapeViewController.m in Sources */,
 				564DA1471CAE5B8C006EE0A7 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
