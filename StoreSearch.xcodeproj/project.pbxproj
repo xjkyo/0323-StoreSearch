@@ -24,6 +24,7 @@
 		56641E8E1CAA5486005E86A6 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56641E8D1CAA5486005E86A6 /* LoadingCell.xib */; };
 		56702E4E1CB4FE6D00176DB4 /* LandscapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56702E4C1CB4FE6D00176DB4 /* LandscapeViewController.m */; };
 		56702E4F1CB4FE6D00176DB4 /* LandscapeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56702E4D1CB4FE6D00176DB4 /* LandscapeViewController.xib */; };
+		5674CE771CB6A3CF0073F859 /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 5674CE761CB6A3CF0073F859 /* Search.m */; };
 		AF4B5FDEE63D6B9B4A000509 /* libPods-StoreSearch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 756E5A2BDE1A8C9EF756E431 /* libPods-StoreSearch.a */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,8 @@
 		56702E4B1CB4FE6D00176DB4 /* LandscapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LandscapeViewController.h; sourceTree = "<group>"; };
 		56702E4C1CB4FE6D00176DB4 /* LandscapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandscapeViewController.m; sourceTree = "<group>"; };
 		56702E4D1CB4FE6D00176DB4 /* LandscapeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LandscapeViewController.xib; sourceTree = "<group>"; };
+		5674CE751CB6A3CF0073F859 /* Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Search.h; sourceTree = "<group>"; };
+		5674CE761CB6A3CF0073F859 /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Search.m; sourceTree = "<group>"; };
 		756E5A2BDE1A8C9EF756E431 /* libPods-StoreSearch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StoreSearch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BF45C8D890DD8F5B50F2DF6 /* Pods-StoreSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoreSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StoreSearch/Pods-StoreSearch.debug.xcconfig"; sourceTree = "<group>"; };
 		A6754712F519D6681F4AAF30 /* Pods-StoreSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoreSearch.release.xcconfig"; path = "Pods/Target Support Files/Pods-StoreSearch/Pods-StoreSearch.release.xcconfig"; sourceTree = "<group>"; };
@@ -141,6 +144,8 @@
 			children = (
 				565F015A1CA2BFB20053BE75 /* AppDelegate.h */,
 				565F015B1CA2BFB20053BE75 /* AppDelegate.m */,
+				5674CE751CB6A3CF0073F859 /* Search.h */,
+				5674CE761CB6A3CF0073F859 /* Search.m */,
 				56581EEF1CA4DDA900CE1C6D /* SearchResult.h */,
 				56581EF01CA4DDA900CE1C6D /* SearchResult.m */,
 				56581EF41CA5278C00CE1C6D /* SearchResultCell.h */,
@@ -389,6 +394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5674CE771CB6A3CF0073F859 /* Search.m in Sources */,
 				565F015C1CA2BFB20053BE75 /* AppDelegate.m in Sources */,
 				5626C53F1CA3CD810022661D /* SearchViewController.m in Sources */,
 				56581EF61CA5278C00CE1C6D /* SearchResultCell.m in Sources */,

@@ -12,6 +12,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "DetailViewController.h"
 #import "LandscapeViewController.h"
+#import "Search.h"
 
 static NSString * const SearchResultCellIdentifier=@"SearchResultCell";
 static NSString * const NothingFoundCellIdentifier=@"NothingFoundCell";
@@ -26,9 +27,10 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 @end
 
 @implementation SearchViewController{
-    NSMutableArray *_searchResults;
-    BOOL _isLoading;
-    AFHTTPSessionManager *manager;
+    //NSMutableArray *_searchResults;
+    //BOOL _isLoading;
+    //AFHTTPSessionManager *manager;
+    Search *_search;
     LandscapeViewController *_landscapeViewController;
     UIStatusBarStyle _statusBarStyle;
     __weak DetailViewController *_detailViewController;     //Now this pointer is no longer keeping the object alive and as soon as the object is deallocated, _detailViewController automatically becomes nil.
@@ -74,7 +76,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 -(void)showLandscapeViewWithDuration:(NSTimeInterval)duration{
     if (_landscapeViewController == nil) {
         _landscapeViewController=[[LandscapeViewController alloc]initWithNibName:@"LandscapeViewController" bundle:nil];
-        _landscapeViewController.searchResults=_searchResults;
+        _landscapeViewController.search=_search;
         _landscapeViewController.view.frame=self.view.bounds;
         _landscapeViewController.view.alpha=0.0f;
         [self.view addSubview:_landscapeViewController.view];
@@ -120,28 +122,28 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 
 #pragma mark - UITableViewDataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (_isLoading) {
-        return 1;
-    }else if (_searchResults == nil) {
+    if (_search==nil) {
         return 0;
-    }else if([_searchResults count]==0){
+    }else if (_search.isLoading) {
+        return 1;
+    }else if([_search.searchResults count]==0){
         return 1;
     }else{
-        return [_searchResults count];
+        return [_search.searchResults count];
     }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
-    if (_isLoading) {
+    if (_search.isLoading) {
         UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier forIndexPath:indexPath];
         UIActivityIndicatorView *spinner=(UIActivityIndicatorView *)[cell viewWithTag:100];
         [spinner startAnimating];
         return cell;
-    }else if([_searchResults count]==0){
+    }else if([_search.searchResults count]==0){
         return [tableView dequeueReusableCellWithIdentifier:NothingFoundCellIdentifier forIndexPath:indexPath];
     }else{
         SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier forIndexPath:indexPath];
-        SearchResult *searchResult=_searchResults[indexPath.row];
+        SearchResult *searchResult=_search.searchResults[indexPath.row];
         [cell configureForSearchResult:searchResult];
         return cell;
     }
@@ -152,7 +154,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     DetailViewController *controller=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];  //This is the equivalent of making a modal segue
-    SearchResult *searchResult=_searchResults[indexPath.row];
+    SearchResult *searchResult=_search.searchResults[indexPath.row];
     controller.searchResult=searchResult;
     /*
     controller.view.frame=self.view.bounds;      //After you instantiate the DetailViewController it always has a view that is 568 points high, even on a 3.5-inch device. Before you add its view to the window you need to resize it to the proper dimensions.
@@ -176,7 +178,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([_searchResults count]==0 || _isLoading){
+    if([_search.searchResults count]==0 || _search.isLoading){
         return nil;//it may still turn gray if you hold down on the row for a short while. That is because you did not change the selectionStyle property of the cell.
     }else{
         return indexPath;
@@ -186,7 +188,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 #pragma mark - UISegmentedControl
 -(IBAction)segmentChanged:(UISegmentedControl *)sender{
     NSLog(@"segment changed:%d",sender.selectedSegmentIndex);
-    if (_searchResults != nil) {
+    if (_search != nil) {
         [self performSearch];
     }
 }
@@ -208,6 +210,17 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 }
 
 -(void)performSearch{
+    _search=[[Search alloc]init];
+    NSLog(@"allocated %@",_search);
+    [_search performSearchForText:self.searchBar.text category:self.segmentedControl.selectedSegmentIndex completion:^(BOOL success){
+        if (!success) {
+            [self showNetworkError];
+        }
+        [self.tableView reloadData];
+    }];
+    [self.tableView reloadData];
+    [self.searchBar resignFirstResponder];
+    /*
     if([self.searchBar.text length]>0){
         [self.searchBar resignFirstResponder];
         if (manager) {
@@ -219,7 +232,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
         [self.tableView reloadData];//the main thread never gets around to handling that event because you immediately keep the thread busy with the networking operation.
 
         _searchResults=[NSMutableArray arrayWithCapacity:10];
-        /*
+     */
+        /*/////
         dispatch_queue_t queue=dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_async(queue, ^{
             NSURL *url=[self urlWithSearchText:searchBar.text];
@@ -249,7 +263,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
                 _isLoading=NO;
                 [self.tableView reloadData];
             });
-        });*/
+        });*//////
+    /*
         NSURL *url=[self urlWithSearchText:self.searchBar.text category:self.segmentedControl.selectedSegmentIndex];
         //AFHTTPSessionManager *manager=[AFHTTPSessionManager manager];
         manager=[AFHTTPSessionManager manager];
@@ -271,135 +286,10 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
             [self.tableView reloadData];
         }];
     }
+*/
 }
 
--(NSURL *)urlWithSearchText:(NSString *)searchText category:(NSInteger)category{
-    NSString *categoryName;
-    switch (category) {
-        case 0: categoryName = @""; break;
-        case 1: categoryName = @"musicTrack"; break;
-        case 2: categoryName = @"software"; break;
-        case 3: categoryName = @"ebook"; break;
-    }
-    
-    //NSString *escapedSearchText=[searchText stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *escapedSearchText=[searchText stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSString *urlString=[NSString stringWithFormat:@"http://itunes.apple.com/search?term=%@&limit=200&entity=%@",escapedSearchText,categoryName];
-    NSURL *url=[NSURL URLWithString:urlString];
-    return url;
-}
 
-/*
--(NSString *)performStoreRequestWithURL:(NSURL *)url{
-    NSError *error;
-    NSString *resultString=[NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
-    if(resultString==nil){
-        NSLog(@"Download Error:%@",error);
-        return nil;
-    }
-    return resultString;
-}*/
-
-#pragma mark - Parsing JSON 
-/*
--(NSDictionary *)parseJSON:(NSString *)jsonString{
-    NSData *data=[jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error;
-    id resuleObject=[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    if(resuleObject==nil){
-        NSLog(@"JSON Error: %@",error);
-        return nil;
-    }
-    if(![resuleObject isKindOfClass:[NSDictionary class]]){
-        NSLog(@"JSON Error: Expected dictionary");//It could have returned an NSArray or even an NSString or NSNumber...
-        return nil;
-    }
-    return resuleObject;
-}*/
-
--(void)parseDictionary:(NSDictionary *)dictionary{
-    //NSArray *array=dictionary[@"results"];
-    NSArray *array=dictionary[@"results"];//[dictionary objectForKey:@"results"];
-    if (array == nil) {
-        NSLog(@"Excepted 'result' array");
-        return;
-    }
-    for (NSDictionary *resultDict in array) {
-        //NSLog(@"wrapperType:%@,kind:%@",resultDict[@"wrapperType"],resultDict[@"kind"]);
-        SearchResult *searchResult;
-        NSString *wrapperType=resultDict[@"wrapperType"];
-        NSString *kind=resultDict[@"kind"];
-        
-        if ([wrapperType isEqualToString:@"track"]) {
-            searchResult=[self parseTrack:resultDict];
-        }else if ([wrapperType isEqualToString:@"audiobook"]){
-            searchResult=[self parseAudioBook:resultDict];
-        }else if ([wrapperType isEqualToString:@"software"]){
-            searchResult=[self parseSoftware:resultDict];
-        }else if ([kind isEqualToString:@"ebook"]){
-            searchResult=[self parseEbook:resultDict];
-        }
-        if (searchResult!=nil) {
-            [_searchResults addObject:searchResult];
-        }
-    }
-}
-
--(SearchResult *)parseTrack:(NSDictionary *)dictionary{
-    SearchResult *searchResult=[[SearchResult alloc]init];
-    searchResult.name=[dictionary objectForKey:@"trackName"]; //dictionary[@"trackName"];
-    searchResult.artistName=dictionary[@"artistName"];
-    searchResult.artworkURL60=dictionary[@"artworkUrl60"];
-    searchResult.artworkURL100=dictionary[@"artworkUrl100"];
-    searchResult.storeURL=dictionary[@"trackViewUrl"];
-    searchResult.kind=dictionary[@"kind"];
-    searchResult.price=dictionary[@"trackPrice"];
-    searchResult.currency=dictionary[@"currency"];
-    searchResult.genre=dictionary[@"primaryGenreName"];
-    return searchResult;
-}
-
--(SearchResult *)parseAudioBook:(NSDictionary *)dictionary{
-    SearchResult *searchResult=[[SearchResult alloc]init];
-    searchResult.name=dictionary[@"collectionName"];
-    searchResult.artistName=dictionary[@"artistName"];
-    searchResult.artworkURL60=dictionary[@"artworkUrl60"];
-    searchResult.artworkURL100=dictionary[@"artworkUrl100"];
-    searchResult.storeURL=dictionary[@"collectionViewUrl"];
-    searchResult.kind=@"audiobook";
-    searchResult.price=dictionary[@"collectionPrice"];
-    searchResult.currency=dictionary[@"currency"];
-    searchResult.genre=dictionary[@"primaryGenreName"];
-    return searchResult;
-}
-
--(SearchResult *)parseSoftware:(NSDictionary *)dictionary{
-    SearchResult *searchResult=[[SearchResult alloc]init];
-    searchResult.name=dictionary[@"trackName"];
-    searchResult.artistName=dictionary[@"artistName"];
-    searchResult.artworkURL60=dictionary[@"artworkUrl60"];
-    searchResult.artworkURL100=dictionary[@"artworkUrl100"];
-    searchResult.storeURL=dictionary[@"trackViewUrl"];
-    searchResult.kind=dictionary[@"kind"];
-    searchResult.price=dictionary[@"price"];
-    searchResult.currency=dictionary[@"currency"];
-    searchResult.genre=dictionary[@"primaryGenreName"];
-    return searchResult;
-}
-
--(SearchResult *)parseEbook:(NSDictionary *)dictionary{
-    SearchResult *searchResult=[[SearchResult alloc]init];
-    searchResult.name=dictionary[@"trackName"];
-    searchResult.artistName=dictionary[@"artistName"];
-    searchResult.artworkURL60=dictionary[@"artworkUrl60"];
-    searchResult.artworkURL100=dictionary[@"artworkUrl100"];
-    searchResult.storeURL=dictionary[@"trackViewUrl"];
-    searchResult.kind=dictionary[@"kind"];
-    searchResult.price=dictionary[@"price"];
-    searchResult.currency=dictionary[@"currency"];
-    searchResult.genre=[(NSArray *)dictionary[@"genres"]componentsJoinedByString:@", "];
-    return searchResult;
-}
 
 
 
