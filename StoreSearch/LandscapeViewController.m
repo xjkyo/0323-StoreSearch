@@ -10,6 +10,7 @@
 #import "SearchResult.h"
 #import <AFNetworking/UIButton+AFNetworking.h>
 #import "Search.h"
+#import "DetailViewController.h"
 
 @interface LandscapeViewController () <UIScrollViewDelegate>
 @property (nonatomic,weak) IBOutlet UIScrollView *scrollView;
@@ -39,7 +40,16 @@
     [super viewWillLayoutSubviews];
     if (_firstTime) {
         _firstTime=NO;      //that method may be invoked more than once,use the _firstTime variable to make sure you only place the buttons once.
-        [self tileButtons];
+        
+        if (self.search != nil) {
+            if (self.search.isLoading) {
+                [self showSpinner];
+            }else if ([self.search.searchResults count]==0){
+                [self showNothingFoundLabel];
+            }else{
+                [self tileButtons];
+            }
+        }
     }
 }
 
@@ -55,6 +65,42 @@
         //这里曾出现一个BUG：因为UIScrollView的横竖滚动条导致在subviews里面多了两个UIImageView,我们只需要设置scrollView.showsHorizontalScrollIndicator=NO;scrollView.showsVerticalScrollIndicator=NO;就可以把两个UIImageView去掉
         [button cancelImageDownloadTaskForState:UIControlStateNormal];
     }
+}
+
+-(void)showSpinner{
+    UIActivityIndicatorView *spinner=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    spinner.center=CGPointMake(CGRectGetMidX(self.scrollView.bounds)+0.5f, CGRectGetMidY(self.scrollView.bounds)+0.5f);
+    spinner.tag=1000;
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
+}
+
+-(void)hideSpinner{
+    [[self.view viewWithTag:1000] removeFromSuperview];
+}
+
+-(void)searchResultsReceived{
+    [self hideSpinner];
+    if ([self.search.searchResults count]==0) {
+        [self showNothingFoundLabel];
+    }else{
+        [self tileButtons];
+    }
+}
+
+-(void)showNothingFoundLabel{
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectZero];
+    label.text=@"Nothing Found";
+    label.backgroundColor=[UIColor clearColor];
+    label.textColor=[UIColor whiteColor];
+    
+    [label sizeToFit];
+    CGRect rect=label.frame;
+    rect.size.width=ceilf(rect.size.width/2.0f)*2.0f;
+    rect.size.height=ceil(rect.size.height/2.0f)*2.0f;
+    label.frame=rect;
+    label.center=CGPointMake(CGRectGetMidX(self.scrollView.bounds), CGRectGetMidY(self.scrollView.bounds));
+    [self.view addSubview:label];
 }
 
 -(void)tileButtons{
@@ -85,6 +131,9 @@
         //[button setTitle:[NSString stringWithFormat:@"%d",index] forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageNamed:@"LandscapeButton"] forState:UIControlStateNormal];
         button.frame=CGRectMake(x+marginHorz, 20.0f+row*itemHeight+marginVert, buttonWidth, buttonHeight);
+        button.tag=2000+index;
+        [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
         [self downloadImageForSearchResult:searchResult andPlaceOnButton:button];
         [self.scrollView addSubview:button];
         index++;
@@ -135,6 +184,13 @@
         UIImage *unscaledImage=[UIImage imageWithCGImage:image.CGImage scale:1.0 orientation:image.imageOrientation];//By passing 1.0 to the scale parameter you simply tell UIImage that it should not treat this as a Retina image
         [weakButton setImage:unscaledImage forState:UIControlStateNormal];
     }failure:nil];
+}
+
+-(void)buttonPressed:(UIButton *)sender{
+    DetailViewController *controller=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];
+    SearchResult *searchResult=self.search.searchResults[sender.tag-2000];
+    controller.searchResult=searchResult;
+    [controller presentInParentViewController:self];
 }
 
 @end
