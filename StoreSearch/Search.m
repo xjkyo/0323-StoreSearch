@@ -62,10 +62,15 @@ static AFHTTPSessionManager *manager = nil;
         case 3: categoryName = @"ebook"; break;
     }
     
+    NSLocale *locale=[NSLocale autoupdatingCurrentLocale];
+    NSString *language=[locale localeIdentifier];
+    NSString *contryCode=[locale objectForKey:NSLocaleCountryCode];
+    
     //NSString *escapedSearchText=[searchText stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *escapedSearchText=[searchText stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSString *urlString=[NSString stringWithFormat:@"http://itunes.apple.com/search?term=%@&limit=200&entity=%@",escapedSearchText,categoryName];
+    NSString *urlString=[NSString stringWithFormat:@"http://itunes.apple.com/search?term=%@&limit=200&entity=%@&lang=%@&country=%@",escapedSearchText,categoryName,language,contryCode];
     NSURL *url=[NSURL URLWithString:urlString];
+    NSLog(@"URL: %@",url);
     return url;
 }
 
