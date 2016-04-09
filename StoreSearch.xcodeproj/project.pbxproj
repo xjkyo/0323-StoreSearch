@@ -17,6 +17,7 @@
 		5650B18D1CB8046700EA268C /* LandscapeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5650B18F1CB8046700EA268C /* LandscapeViewController.xib */; };
 		56581EF11CA4DDA900CE1C6D /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 56581EF01CA4DDA900CE1C6D /* SearchResult.m */; };
 		56581EF61CA5278C00CE1C6D /* SearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56581EF51CA5278C00CE1C6D /* SearchResultCell.m */; };
+		56582ADC1CB8BACE0013AFD6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 56582ADA1CB8BACE0013AFD6 /* Localizable.strings */; };
 		565F01591CA2BFB20053BE75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F01581CA2BFB20053BE75 /* main.m */; };
 		565F015C1CA2BFB20053BE75 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 565F015B1CA2BFB20053BE75 /* AppDelegate.m */; };
 		565F01641CA2BFB20053BE75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 565F01631CA2BFB20053BE75 /* Assets.xcassets */; };
@@ -64,6 +65,8 @@
 		56581EF01CA4DDA900CE1C6D /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
 		56581EF41CA5278C00CE1C6D /* SearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultCell.h; sourceTree = "<group>"; };
 		56581EF51CA5278C00CE1C6D /* SearchResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultCell.m; sourceTree = "<group>"; };
+		56582ADB1CB8BACE0013AFD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		56582ADD1CB8BAD60013AFD6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		565F01541CA2BFB20053BE75 /* StoreSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		565F01581CA2BFB20053BE75 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		565F015A1CA2BFB20053BE75 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -176,6 +179,7 @@
 		565F01571CA2BFB20053BE75 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				56582ADA1CB8BACE0013AFD6 /* Localizable.strings */,
 				565F01631CA2BFB20053BE75 /* Assets.xcassets */,
 				565F01681CA2BFB20053BE75 /* Info.plist */,
 				565F01581CA2BFB20053BE75 /* main.m */,
@@ -325,6 +329,7 @@
 				5650B1751CB7FEAC00EA268C /* LoadingCell.xib in Resources */,
 				5650B18A1CB8046100EA268C /* SearchResultCell.xib in Resources */,
 				5650B16E1CB7F75B00EA268C /* NothingFoundCell.xib in Resources */,
+				56582ADC1CB8BACE0013AFD6 /* Localizable.strings in Resources */,
 				5650B18D1CB8046700EA268C /* LandscapeViewController.xib in Resources */,
 				5650B1821CB800F400EA268C /* SearchViewController.xib in Resources */,
 			);
@@ -493,6 +498,15 @@
 				5650B18E1CB8046700EA268C /* Base */,
 			);
 			name = LandscapeViewController.xib;
+			sourceTree = "<group>";
+		};
+		56582ADA1CB8BACE0013AFD6 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				56582ADB1CB8BACE0013AFD6 /* Base */,
+				56582ADD1CB8BAD60013AFD6 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

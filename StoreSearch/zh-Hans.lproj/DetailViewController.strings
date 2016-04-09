@@ -12,7 +12,7 @@
 "XyJ-Xy-4lH.text" = "Artist Name";
 
 /* Class = "UILabel"; text = "Genre:"; ObjectID = "gLs-mp-sFq"; */
-"gLs-mp-sFq.text" = "Genre:";
+"gLs-mp-sFq.text" = "风格:";
 
 /* Class = "UIButton"; normalTitle = "Price"; ObjectID = "htD-Iq-Mmv"; */
 "htD-Iq-Mmv.normalTitle" = "Price";
