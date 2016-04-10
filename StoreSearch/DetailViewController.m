@@ -20,6 +20,9 @@
 @property (nonatomic,weak) IBOutlet UILabel *kindLabel;
 @property (nonatomic,weak) IBOutlet UILabel *genreLabel;
 @property (nonatomic,weak) IBOutlet UIButton *priceButton;
+@property (nonatomic,weak) IBOutlet UIButton *closeButton;
+
+@property (nonatomic,strong) UIPopoverController *masterPopoverController;      //This property keeps track of the master pane in PORTRAIT orientation.
 @end
 
 @implementation DetailViewController{
@@ -35,16 +38,25 @@
     self.view.tintColor=[UIColor colorWithRed:20/255.0f green:160/255.0f blue:160/255.0f alpha:1.0f];
     self.popupView.layer.cornerRadius=10.0f;
     
-    UITapGestureRecognizer *gestureRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(close:)];
-    gestureRecognizer.cancelsTouchesInView=NO;
-    gestureRecognizer.delegate=self;
-    [self.view addGestureRecognizer:gestureRecognizer];
-    
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) {
+        self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"LandscapeBackground"]];
+        self.closeButton.hidden=YES;
+        self.popupView.hidden=(self.searchResult==nil);
+        NSLog(@"masterPopoverController: %@",self.masterPopoverController);
+        self.title=@"StoreSearch";
+        //self.title=[[[NSBundle mainBundle]localizedInfoDictionary]objectForKey:@"CFBundleDisplayName"];
+        //The self.title property is used by the UINavigationController to put a title in the navigation bar.
+    }else{
+        UITapGestureRecognizer *gestureRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(close:)];
+        gestureRecognizer.cancelsTouchesInView=NO;
+        gestureRecognizer.delegate=self;
+        [self.view addGestureRecognizer:gestureRecognizer];
+        self.view.backgroundColor=[UIColor clearColor];
+    }
+
     if (self.searchResult != nil) {
         [self updateUI];
     }
-    
-    self.view.backgroundColor=[UIColor clearColor];
 }
 
 -(void)dealloc{
@@ -83,6 +95,10 @@
     [self.priceButton setTitle:priceText forState:UIControlStateNormal];
     
     [self.artworkImageView setImageWithURL:[NSURL URLWithString:self.searchResult.artworkURL100]];
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) {
+        self.popupView.hidden=NO;
+        [self.masterPopoverController dismissPopoverAnimated:YES];
+    }
 }
 
 -(IBAction)openInStore:(id)sender{
@@ -138,6 +154,31 @@
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
     [self didMoveToParentViewController:self.parentViewController];
     // When a view controller has been added to a parent controller using addChildViewController:, its parent property points to that parent controller.
+}
+
+#pragma mark - UISplitViewControllerDelegate
+
+-(void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc{
+    NSLog(@"splitViewController willHideViewController");
+    barButtonItem.title=NSLocalizedString(@"Search", @"Split-view master button");
+    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+    self.masterPopoverController=pc;
+}   //切换到竖屏时触发此方法
+
+
+-(void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem{
+    NSLog(@"splitViewController willShowViewController");
+    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    self.masterPopoverController=nil;
+}   //切换到横屏时触发此方法
+
+-(void)setSearchResult:(SearchResult *)newSearchResult{
+    if (_searchResult != newSearchResult) {
+        _searchResult=newSearchResult;
+        if ([self isViewLoaded]) {
+            [self updateUI];
+        }
+    }
 }
 
 @end

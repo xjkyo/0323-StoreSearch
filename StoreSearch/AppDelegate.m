@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "SearchViewController.h"
+#import "DetailViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,7 +21,20 @@
     [self customizeAppearance];
     
     self.searchViewController=[[SearchViewController alloc]initWithNibName:@"SearchViewController" bundle:nil];
-    self.window.rootViewController=self.searchViewController;
+    
+    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) {
+        self.splitViewController=[[UISplitViewController alloc]init];
+        DetailViewController *detailViewController=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];
+        UINavigationController *detailNavigationController=[[UINavigationController alloc]initWithRootViewController:detailViewController];
+        // create an instance of DetailViewController and put that inside a new UINavigationController. It is this navigation controller that you actually put in the split-view’s detail pane.
+        self.splitViewController.delegate=detailViewController;
+        self.splitViewController.viewControllers=@[self.searchViewController,detailNavigationController];   //master pane, detail pane.
+        self.window.rootViewController=self.splitViewController;
+        self.searchViewController.detailViewController=detailViewController;
+    }else{
+        self.window.rootViewController=self.searchViewController;
+    }
+    //self.window.rootViewController=self.searchViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

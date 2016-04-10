@@ -33,7 +33,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     Search *_search;
     LandscapeViewController *_landscapeViewController;
     UIStatusBarStyle _statusBarStyle;
-    __weak DetailViewController *_detailViewController;     //Now this pointer is no longer keeping the object alive and as soon as the object is deallocated, _detailViewController automatically becomes nil.
+    //__weak DetailViewController *_detailViewController;     //Now this pointer is no longer keeping the object alive and as soon as the object is deallocated, _detailViewController automatically becomes nil.       iPad中通过AppDelegate中传递detailViewController到self.detailViewController
 }
 
 - (void)viewDidLoad {
@@ -47,9 +47,12 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     cellNib=[UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
     
-    NSLog(@"tableView frame height:%f",self.tableView.frame.size.height);
-    NSLog(@"view frame height:%f",self.view.frame.size.height);  //这里是600，后面是568，why?  答：此处frame还没设置好
-    [self.searchBar becomeFirstResponder];
+    //NSLog(@"tableView frame height:%f",self.tableView.frame.size.height);
+    //NSLog(@"view frame height:%f",self.view.frame.size.height);  //这里是600，后面是568，why?  答：此处frame还没设置好
+    
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+        [self.searchBar becomeFirstResponder];
+    }
     
     _statusBarStyle=UIStatusBarStyleDefault;
 }
@@ -64,12 +67,18 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     return self;
 }*/
 
+-(void)dealloc{
+    NSLog(@"dealloc %@",self);
+}
+
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
-        [self hideLandscapeViewWithDuration:duration];
-    }else{
-        [self showLandscapeViewWithDuration:duration];
+    if (UI_USER_INTERFACE_IDIOM()!=UIUserInterfaceIdiomPad) {
+        if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+            [self hideLandscapeViewWithDuration:duration];
+        }else{
+            [self showLandscapeViewWithDuration:duration];
+        }
     }
 }
 
@@ -89,7 +98,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
             [_landscapeViewController didMoveToParentViewController:self];
         }];
         [self.searchBar resignFirstResponder];
-        [_detailViewController dismissFromParentViewControllerWithAnimationType:DetailViewControllerAnimationTypeFade];
+        [self.detailViewController dismissFromParentViewControllerWithAnimationType:DetailViewControllerAnimationTypeFade];
     }
 }
 
@@ -151,11 +160,18 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.searchBar resignFirstResponder];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    DetailViewController *controller=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];  //This is the equivalent of making a modal segue
     SearchResult *searchResult=_search.searchResults[indexPath.row];
-    controller.searchResult=searchResult;
+    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (UI_USER_INTERFACE_IDIOM()!=UIUserInterfaceIdiomPad) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        DetailViewController *controller=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];  //This is the equivalent of making a modal segue
+        controller.searchResult=searchResult;
+        [controller presentInParentViewController:self];
+        self.detailViewController=controller;       //此处造成了一个内存泄露,dismiss时没有dealloc消息,所以要设置成weak
+    }else{
+        self.detailViewController.searchResult=searchResult;
+    }
+    
     /*
     controller.view.frame=self.view.bounds;      //After you instantiate the DetailViewController it always has a view that is 568 points high, even on a 3.5-inch device. Before you add its view to the window you need to resize it to the proper dimensions.
     NSLog(@"tableView frame height:%f",self.tableView.frame.size.height);
@@ -172,9 +188,8 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     [controller didMoveToParentViewController:self];    //Tell the new view controller that it now has a parent view controller
     //In this new arrangement, SearchViewController is the “parent” view controller, and DetailViewController is the “child”. In other words, the Detail screen is embedded inside the SearchViewController.
      */
-    [controller presentInParentViewController:self];
-    
-    _detailViewController=controller;       //此处造成了一个内存泄露,dismiss时没有dealloc消息,所以要设置成weak
+    //[controller presentInParentViewController:self];
+    //self.detailViewController=controller;       //此处造成了一个内存泄露,dismiss时没有dealloc消息,所以要设置成weak
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -187,7 +202,7 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
 
 #pragma mark - UISegmentedControl
 -(IBAction)segmentChanged:(UISegmentedControl *)sender{
-    NSLog(@"segment changed:%d",sender.selectedSegmentIndex);
+    NSLog(@"segment changed:%ld",(long)sender.selectedSegmentIndex);
     if (_search != nil) {
         [self performSearch];
     }
@@ -291,10 +306,5 @@ static NSString * const LoadingCellIdentifier=@"LoadingCell";
     }
 */
 }
-
-
-
-
-
 
 @end

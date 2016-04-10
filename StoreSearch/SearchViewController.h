@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class DetailViewController;
 @interface SearchViewController : UIViewController
 
+@property (nonatomic, weak) DetailViewController *detailViewController;
 @end
