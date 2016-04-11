@@ -1,0 +1,21 @@
+
+/* Class = "UILabel"; text = "Genre Value"; ObjectID = "3uz-U9-dUk"; */
+"3uz-U9-dUk.text" = "Genre Value";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "MD8-eM-bRO"; */
+"MD8-eM-bRO.text" = "Name";
+
+/* Class = "UILabel"; text = "Type:"; ObjectID = "MUA-g5-nZv"; */
+"MUA-g5-nZv.text" = "类型:";
+
+/* Class = "UILabel"; text = "Artist Name"; ObjectID = "XyJ-Xy-4lH"; */
+"XyJ-Xy-4lH.text" = "Artist Name";
+
+/* Class = "UILabel"; text = "Genre:"; ObjectID = "gLs-mp-sFq"; */
+"gLs-mp-sFq.text" = "风格:";
+
+/* Class = "UIButton"; normalTitle = "Price"; ObjectID = "htD-Iq-Mmv"; */
+"htD-Iq-Mmv.normalTitle" = "Price";
+
+/* Class = "UILabel"; text = "Kind Value"; ObjectID = "kOc-1E-yv9"; */
+"kOc-1E-yv9.text" = "Kind Value";

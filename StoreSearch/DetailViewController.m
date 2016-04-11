@@ -11,8 +11,10 @@
 #import "SearchResult.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "GradientView.h"
+#import "MenuViewController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface DetailViewController () <UIGestureRecognizerDelegate>
+@interface DetailViewController () <UIGestureRecognizerDelegate,MFMailComposeViewControllerDelegate>
 @property (nonatomic,weak) IBOutlet UIView *popupView;
 @property (nonatomic,weak) IBOutlet UIImageView *artworkImageView;
 @property (nonatomic,weak) IBOutlet UILabel *nameLabel;
@@ -23,6 +25,7 @@
 @property (nonatomic,weak) IBOutlet UIButton *closeButton;
 
 @property (nonatomic,strong) UIPopoverController *masterPopoverController;      //This property keeps track of the master pane in PORTRAIT orientation.
+@property (nonatomic,strong) UIPopoverController *menuPopoverController;
 @end
 
 @implementation DetailViewController{
@@ -40,12 +43,13 @@
     
     if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) {
         self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"LandscapeBackground"]];
-        self.closeButton.hidden=YES;
+        //self.closeButton.hidden=YES;
         self.popupView.hidden=(self.searchResult==nil);
         NSLog(@"masterPopoverController: %@",self.masterPopoverController);
         self.title=@"StoreSearch";
         //self.title=[[[NSBundle mainBundle]localizedInfoDictionary]objectForKey:@"CFBundleDisplayName"];
         //The self.title property is used by the UINavigationController to put a title in the navigation bar.
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(menuButtonPressed:)];
     }else{
         UITapGestureRecognizer *gestureRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(close:)];
         gestureRecognizer.cancelsTouchesInView=NO;
@@ -172,6 +176,24 @@
     self.masterPopoverController=nil;
 }   //切换到横屏时触发此方法
 
+-(void)menuButtonPressed:(UIBarButtonItem *)sender{     //present a popover controller.
+    if ([self.menuPopoverController isPopoverVisible]) {
+        [self.menuPopoverController dismissPopoverAnimated:YES];
+        NSLog(@"dismiss menuPopoverController");
+    }else{
+        [self.menuPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
+    //NSLog(@"passthroughViews:%@",self.menuPopoverController.passthroughViews);
+}
+
+-(void)splitViewController:(UISplitViewController *)svc popoverController:(UIPopoverController *)pc willPresentViewController:(UIViewController *)aViewController{
+    if ([self.menuPopoverController isPopoverVisible]) {
+        [self.menuPopoverController dismissPopoverAnimated:YES];
+    }
+}
+
+#pragma mark - setter&getter
+
 -(void)setSearchResult:(SearchResult *)newSearchResult{
     if (_searchResult != newSearchResult) {
         _searchResult=newSearchResult;
@@ -179,6 +201,53 @@
             [self updateUI];
         }
     }
+}
+
+-(UIPopoverController *)menuPopoverController{      //lazy loading
+    if (_menuPopoverController==nil) {
+        MenuViewController *menuViewController=[[MenuViewController alloc]initWithStyle:UITableViewStyleGrouped];
+        menuViewController.detailViewController=self;
+        _menuPopoverController=[[UIPopoverController alloc]initWithContentViewController:menuViewController];
+    }
+    return _menuPopoverController;
+}
+
+#pragma mark - Mail
+
+-(void)sendSupportEmail{
+    [self.menuPopoverController dismissPopoverAnimated:YES];
+    MFMailComposeViewController *controller=[[MFMailComposeViewController alloc]init];
+    controller.mailComposeDelegate=self;
+    controller.modalPresentationStyle=UIModalPresentationFormSheet;//The modalPresentationStyle property determines how a modal view controller is presented on the iPad.
+    
+    if (controller != nil) {
+        [controller setSubject:NSLocalizedString(@"Support Request", @"Email subject")];
+        [controller setMessageBody:@"Test" isHTML:NO];
+        [controller setToRecipients:@[@"xjkyo@126.com"]];
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+}
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"MFMailComposeResultCancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"MFMailComposeResultSaved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"MFMailComposeResultSent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"MFMailComposeResultFailed");
+            break;
+        default:
+            NSLog(@"Mail not sent");
+            break;
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

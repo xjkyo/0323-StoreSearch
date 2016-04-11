@@ -24,7 +24,7 @@
     
     if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) {
         self.splitViewController=[[UISplitViewController alloc]init];
-        DetailViewController *detailViewController=[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];
+        DetailViewController *detailViewController=[[DetailViewController alloc]initWithNibName:@"DetailViewController~iPad" bundle:nil];
         UINavigationController *detailNavigationController=[[UINavigationController alloc]initWithRootViewController:detailViewController];
         // create an instance of DetailViewController and put that inside a new UINavigationController. It is this navigation controller that you actually put in the split-view’s detail pane.
         self.splitViewController.delegate=detailViewController;

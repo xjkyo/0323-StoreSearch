@@ -15,6 +15,8 @@
 		5650B1851CB8030400EA268C /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5650B1871CB8030400EA268C /* DetailViewController.xib */; };
 		5650B18A1CB8046100EA268C /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5650B18C1CB8046100EA268C /* SearchResultCell.xib */; };
 		5650B18D1CB8046700EA268C /* LandscapeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5650B18F1CB8046700EA268C /* LandscapeViewController.xib */; };
+		5652633D1CBA879100579323 /* DetailViewController~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5652633B1CBA879100579323 /* DetailViewController~iPad.xib */; };
+		565263421CBA8CA800579323 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 565263411CBA8CA800579323 /* MenuViewController.m */; };
 		56581EF11CA4DDA900CE1C6D /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 56581EF01CA4DDA900CE1C6D /* SearchResult.m */; };
 		56581EF61CA5278C00CE1C6D /* SearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56581EF51CA5278C00CE1C6D /* SearchResultCell.m */; };
 		56582ADC1CB8BACE0013AFD6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 56582ADA1CB8BACE0013AFD6 /* Localizable.strings */; };
@@ -26,6 +28,7 @@
 		566388B81CB3BE7200E72A13 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 566388B71CB3BE7200E72A13 /* GradientView.m */; };
 		56702E4E1CB4FE6D00176DB4 /* LandscapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56702E4C1CB4FE6D00176DB4 /* LandscapeViewController.m */; };
 		5674CE771CB6A3CF0073F859 /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 5674CE761CB6A3CF0073F859 /* Search.m */; };
+		56AF696C1CBB7D160064376D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56AF696B1CBB7D160064376D /* MessageUI.framework */; };
 		AF4B5FDEE63D6B9B4A000509 /* libPods-StoreSearch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 756E5A2BDE1A8C9EF756E431 /* libPods-StoreSearch.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +64,10 @@
 		5650B1891CB8032D00EA268C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DetailViewController.strings"; sourceTree = "<group>"; };
 		5650B18B1CB8046100EA268C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SearchResultCell.xib; sourceTree = "<group>"; };
 		5650B18E1CB8046700EA268C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LandscapeViewController.xib; sourceTree = "<group>"; };
+		5652633C1CBA879100579323 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Base.lproj/DetailViewController~iPad.xib"; sourceTree = "<group>"; };
+		5652633F1CBA8AAC00579323 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DetailViewController~iPad.strings"; sourceTree = "<group>"; };
+		565263401CBA8CA800579323 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		565263411CBA8CA800579323 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		56581EEF1CA4DDA900CE1C6D /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		56581EF01CA4DDA900CE1C6D /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
 		56581EF41CA5278C00CE1C6D /* SearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultCell.h; sourceTree = "<group>"; };
@@ -85,6 +92,7 @@
 		56702E4C1CB4FE6D00176DB4 /* LandscapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LandscapeViewController.m; sourceTree = "<group>"; };
 		5674CE751CB6A3CF0073F859 /* Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Search.h; sourceTree = "<group>"; };
 		5674CE761CB6A3CF0073F859 /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Search.m; sourceTree = "<group>"; };
+		56AF696B1CBB7D160064376D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		756E5A2BDE1A8C9EF756E431 /* libPods-StoreSearch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StoreSearch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BF45C8D890DD8F5B50F2DF6 /* Pods-StoreSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoreSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StoreSearch/Pods-StoreSearch.debug.xcconfig"; sourceTree = "<group>"; };
 		A6754712F519D6681F4AAF30 /* Pods-StoreSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StoreSearch.release.xcconfig"; path = "Pods/Target Support Files/Pods-StoreSearch/Pods-StoreSearch.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56AF696C1CBB7D160064376D /* MessageUI.framework in Frameworks */,
 				AF4B5FDEE63D6B9B4A000509 /* libPods-StoreSearch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,6 +128,7 @@
 		0282AEB00DD598043E4D9E56 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				56AF696B1CBB7D160064376D /* MessageUI.framework */,
 				756E5A2BDE1A8C9EF756E431 /* libPods-StoreSearch.a */,
 			);
 			name = Frameworks;
@@ -166,11 +176,14 @@
 				564DA1441CAE5B8C006EE0A7 /* DetailViewController.h */,
 				564DA1451CAE5B8C006EE0A7 /* DetailViewController.m */,
 				5650B1871CB8030400EA268C /* DetailViewController.xib */,
+				5652633B1CBA879100579323 /* DetailViewController~iPad.xib */,
 				566388B61CB3BE7200E72A13 /* GradientView.h */,
 				566388B71CB3BE7200E72A13 /* GradientView.m */,
 				56702E4B1CB4FE6D00176DB4 /* LandscapeViewController.h */,
 				56702E4C1CB4FE6D00176DB4 /* LandscapeViewController.m */,
 				5650B18F1CB8046700EA268C /* LandscapeViewController.xib */,
+				565263401CBA8CA800579323 /* MenuViewController.h */,
+				565263411CBA8CA800579323 /* MenuViewController.m */,
 				565F01571CA2BFB20053BE75 /* Supporting Files */,
 			);
 			path = StoreSearch;
@@ -332,6 +345,7 @@
 				56582ADC1CB8BACE0013AFD6 /* Localizable.strings in Resources */,
 				5650B18D1CB8046700EA268C /* LandscapeViewController.xib in Resources */,
 				5650B1821CB800F400EA268C /* SearchViewController.xib in Resources */,
+				5652633D1CBA879100579323 /* DetailViewController~iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +427,7 @@
 				566388B81CB3BE7200E72A13 /* GradientView.m in Sources */,
 				56702E4E1CB4FE6D00176DB4 /* LandscapeViewController.m in Sources */,
 				564DA1471CAE5B8C006EE0A7 /* DetailViewController.m in Sources */,
+				565263421CBA8CA800579323 /* MenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +513,15 @@
 				5650B18E1CB8046700EA268C /* Base */,
 			);
 			name = LandscapeViewController.xib;
+			sourceTree = "<group>";
+		};
+		5652633B1CBA879100579323 /* DetailViewController~iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5652633C1CBA879100579323 /* Base */,
+				5652633F1CBA8AAC00579323 /* zh-Hans */,
+			);
+			name = "DetailViewController~iPad.xib";
 			sourceTree = "<group>";
 		};
 		56582ADA1CB8BACE0013AFD6 /* Localizable.strings */ = {
